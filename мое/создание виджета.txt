@@ -1,0 +1,35 @@
+if (function_exists('register_sidebar')){
+   register_sidebar( array(
+        'name'          => 'Questions', //название виджета в админ-панели
+        'id'            => 'questions', //идентификатор виджета
+        'description'   => 'виден во всех разделах сайта', //описание виджета в админ-панели
+	    'before_widget' => '<aside id="%1$s" class="questions-widget">', //открывающий тег виджета с динамичным идентификатором
+        'after_widget'  => '<div class="clear"></div></aside>', //закрывающий тег виджета с очищающим блоком
+        'before_title'  => '<span class="widget-title">', //открывающий тег заголовка виджета
+        'after_title'   => '</span>',//закрывающий тег заголовка виджета
+        ) );
+}
+
+
+шорт код для виджета
+
+function questions_for_page( $atts ) {
+    extract( shortcode_atts( array(
+        'id' => 1700,
+    ), $atts ) );
+    return dynamic_sidebar( 'questions' );
+}
+add_shortcode( 'questions_code', 'questions_for_page' );
+
+
+если ошибка
+
+
+function block_link_page_price( $atts ) {
+		ob_start();
+    extract( shortcode_atts( array(
+        'id' => 125,
+    ), $atts ) );
+    return get_template_part( 'pricePage/blockLinkPage' ); 
+}
+add_shortcode( 'block_link_page_price_code', 'block_link_page_price' );

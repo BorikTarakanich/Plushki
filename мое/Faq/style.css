@@ -1,0 +1,93 @@
+
+.block_questions_FAQ
+{
+    max-width: 1160px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.box_questions_FAQ
+{
+   max-width: 365px;
+   height: 95px;
+   width: 100%;
+}
+.box-FAQ
+{ 
+    max-height: 165px;
+    padding-top: 25px;
+    padding-left: 30px;
+    padding-bottom: 25px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(92, 99, 105, 0.15);
+    border-radius: 8px;
+}
+
+/* Checkbox Hack */
+
+input[type=checkbox] {
+ position: absolute;
+ top: -9999px;
+ left: -9999px;
+}
+.box-FAQ label { 
+    
+    cursor: pointer;
+}
+.box-FAQ label span
+{
+    height: 30px;
+    display: block;
+    max-width: 270px;
+    width: 100%;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+margin-bottom: 15px;
+    /* #05332D */
+
+    color: #185850;
+    opacity: 0.9;
+}
+/* Default State */
+.FAQ_answer {
+    height: 70px;
+    padding-top: 15px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 130%;
+    color: #4B4B4B;
+    display: none;
+max-width: 270px;
+
+    /*  анимации при появлении */
+    -webkit-animation:fade ease-in 0.5s; 
+    -moz-animation:fade ease-in 0.5s;
+    animation:fade ease-in 0.5s; 
+}
+/* анимация при появлении скрытых блоков */
+@-moz-keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1 }
+}
+@-webkit-keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1 }
+}
+@keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1 }   
+}
+/* Toggled State */
+input[type=checkbox]:checked ~ .FAQ_answer {
+ display: block;
+}
+input[type=checkbox]:checked ~ .box-FAQ {
+
+ height: 400px;
+}

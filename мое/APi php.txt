@@ -1,0 +1,33 @@
+<?php
+
+
+function post_on_wall(){
+
+
+    $url = "https://www.nbrb.by/api/exrates/rates?periodicity=0";
+
+    $opts = array(
+        'http'=>array(
+          'method'=>"GET",
+        )
+      );
+      
+      $context = stream_context_create($opts);
+      $fp = file_get_contents(' https://www.nbrb.by/api/exrates/currencies', false, $context);
+//    fpassthru($fp);
+  
+  $decoded = json_decode($fp);
+  print_r($decoded);echo '<br>';
+  print_r($decoded->Cur_ID);echo '<br>';
+  print_r($decoded->Cur_OfficialRate);
+
+
+
+
+}
+
+post_on_wall()
+
+
+
+?>

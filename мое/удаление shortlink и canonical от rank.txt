@@ -1,0 +1,4 @@
+https://samsebewebmaster.ru/samouchitel-wordpress/shortlink-wordpress.html
+
+
+add_filter( 'rank_math/frontend/canonical', '__return_false' );

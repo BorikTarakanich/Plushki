@@ -1,0 +1,73 @@
+//Короткие урлы для property-type
+
+// смена запроса 3
+add_filter('request', 'true_smenit_request3', 1, 1 );
+ 
+function true_smenit_request3( $query ){
+ 
+	$taxonomia_name = 'category-machinery'; // укажите название таксономии здесь, это также могут быть рубрики category или метки post_tag
+ 
+	// запросы для дочерних элементов будут отличаться, поэтому нам потребуется дополнительная проверка
+	if( $query['attachment'] ) :
+		$dochernia = true; // эту переменную задаём для себя, она нам потребуется дальше
+		$urlyarlyk = $query['attachment']; // это ярлык данного термина/рубрики/метки
+	else:
+		$dochernia = false;
+		$urlyarlyk = $query['name']; // как видите, здесь ярлык хранится в другой переменной запроса
+	endif;
+ 
+ 
+	$termin = get_term_by('slug', $urlyarlyk, $taxonomia_name); // получаем элемент таксономии по ярлыку
+ 
+	if ( isset( $urlyarlyk ) && $termin && !is_wp_error( $termin )): // если такого элемента не существует, прекращаем выполнение кода
+ 
+		// для страниц дочерних элементов код немного отличается
+		if( $dochernia ) {
+			unset( $query['attachment'] );
+			$parent = $termin->parent;
+			while( $parent ) {
+				$parent_term = get_term( $parent, $taxonomia_name);
+				$urlyarlyk = $parent_term->slug . '/' . $urlyarlyk; // нам нужно получить полный путь, состоящий из ярлыка текущего элемента и всех его родителей
+				$parent = $parent_term->parent;
+			}
+		} else {
+			unset($query['name']);
+		}
+ 
+		switch( $taxonomia_name ): // параметры запроса для рубрик и меток отличаются от других таксономий
+			case 'category':{
+				$query['category_name'] = $urlyarlyk;
+				break;
+			}
+			case 'post_tag':{
+				$query['tag'] = $urlyarlyk;
+				break;
+			}
+			default:{
+				$query[$taxonomia_name] = $urlyarlyk;
+				break;
+			}
+		endswitch;
+ 
+	endif;
+ 
+	return $query;
+ 
+}
+ 
+// смена самой ссылки 3
+add_filter( 'term_link', 'true_smena_permalink3', 10, 3 );
+ 
+function true_smena_permalink3( $url, $term, $taxonomy ){
+ 
+	$taxonomia_name = 'category-machinery'; // название таксономии, тут всё понятно
+	$taxonomia_slug = 'category-machinery'; // ярлык таксономии - зависит от параметра rewrite, указанного при создании и может отличаться от названия,
+	// как например таксономия меток это post_tag, а ярлык по умолчанию tag
+ 
+	// выходим из функции, если указанного ярлыка таксономии нет в URL или если название таксономии не соответствует
+	if ( strpos($url, $taxonomia_slug) === FALSE || $taxonomy != $taxonomia_name ) return $url;
+ 
+	$url = str_replace('/' . $taxonomia_slug, '', $url); // если мы ещё тут, выполняем замену в URL
+ 
+	return $url;
+}

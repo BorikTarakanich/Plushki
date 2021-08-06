@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="box active">1</div>
+    <div class="box active">2</div>
+    <div class="box active">3</div>
+    <div class="box active">4</div>
+    <div class="box">
+      5
+
+      <div class="rte"></div>
+    </div>
+    <div class="box">6</div>
+    <div class="box">7</div>
+    <div class="box">8</div>
+    <div class="box">9</div>
+    <div class="box">10</div>
+    <div class="box">11</div>
+    <div class="box">12</div>
+    <div class="box">13</div>
+    <div class="box">14</div>
+    <div class="box">15</div>
+
+    <div class="but"></div>
+  </body>
+</html>
+<style>
+  .but {
+    background-color: red;
+    width: 50px;
+    height: 10px;
+  }
+  .box {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    border: 5px solid red;
+    display: none;
+  }
+  .active {
+    display: block;
+  }
+</style>
+
+<script>
+  let but = document.querySelector(".but");
+
+  let box = document.querySelectorAll(".box");
+  let count = 4;
+  function show() {
+    count = count + 4;
+    for (let i = count; i < count + 4; i++) {
+      if (box[i]) box[i].classList.add("active");
+    }
+  }
+  but.addEventListener("click", show);
+</script>

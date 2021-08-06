@@ -1,0 +1,33 @@
+class Curc {
+  constructor() {
+    this.cursURL = "https://www.nbrb.by/api/exrates/rates?periodicity=0";
+    this.PositionValute = 16;
+    this.oldCurs = 3.525;
+    this.newCurs;
+  }
+
+  async getCurs() {
+    try {
+      const resp = await fetch(this.cursURL)
+        .then((resJSON) => resJSON.json())
+        .then(
+          (resPos) =>
+            (this.newCurs = resPos[this.PositionValute].Cur_OfficialRate)
+        );
+    } catch {
+      this.newCurs = this.oldCurs;
+    }
+    return this.newCurs;
+  }
+
+  postCurs() {}
+}
+let newCurs = new Curc();
+newCurs.getCurs().then((res) => myfun(res));
+
+function myfun(curs) {
+  let data = {
+    curs: curs,
+  };
+  console.log(data);
+}
